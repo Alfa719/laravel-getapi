@@ -12,20 +12,27 @@ class MahasiswaController extends Controller
         $response = Http::get('http://127.0.0.1:8000/api/mahasiswa')->json('data');
         $prodi = Http::get('http://127.0.0.1:8000/api/prodi')->json('data');
         // dd($response['message']);
-        return view ('mahasiswa.index', [
-            'data' => $response,
-            'prodi' => $prodi,
-        ]);
+        return view ('mahasiswa.index', compact(['response', 'prodi']));
     }
     public function store(Request $request)
     {
         $response = Http::post('http://127.0.0.1:8000/api/mahasiswa', $request->all());
         return redirect()->route('mahasiswa.index');
     }
-    public function destroy(Request $request, $id)
+    public function show($id)
     {
-        $response = Http::post('http://127.0.0.1:8000/api/mahasiswa/', $id);
-        dd($response);
+        $response = Http::get('http://127.0.0.1:8000/api/mahasiswa/' . $id)->json('data');
+        $prodi = Http::get('http://127.0.0.1:8000/api/prodi')->json('data');
+        return view('mahasiswa.edit', compact(['response', 'prodi']));
+    }
+    public function destroy($id)
+    {
+        $response = Http::delete('http://127.0.0.1:8000/api/mahasiswa/'. $id)->json('data');
+        return redirect()->route('mahasiswa.index');
+    }
+    public function update(Request $request, $id)
+    {
+        $response = Http::put('http://127.0.0.1:8000/api/mahasiswa/' . $id, $request->all());
         return redirect()->route('mahasiswa.index');
     }
 }

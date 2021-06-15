@@ -59,19 +59,18 @@
                 <th>Prodi</th>
                 <th>Aksi</th>
             </tr>
-            @foreach ($data as $item)
+            @foreach ($response as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item['nim'] }}</td>
                     <td>{{ $item['nama'] }}</td>
                     <td>{{ $item['jenis_kelamin'] }}</td>
-                    <td>{{ $item['prodi_id'] }}</td>
+                    <td>{{ $item['prodi']['nama_prodi'] }}</td>
                     <td>
-                        <a href="">Edit</a>
-                        <form action="{{ url('mahasiswa/') }}/{{ $item['id'] }}" method="post">
-                            @method('post')
+                        <a href="{{ url('mahasiswa')}}/{{ $item['id'] }}">Edit</a>
+                        <form action="{{ url('mahasiswa')}}/{{ $item['id'] }}" method="post">
+                            @method('delete')
                             @csrf
-
                             <input type="submit" value="Delete">
                         </form>
                     </td>
